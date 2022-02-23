@@ -1,8 +1,28 @@
 import React from "react";
 
 function Sort({ activeSortType, setActiveSortType, sortTypes }) {
+    const [hiddenPopup, setHiddenPopup] = React.useState(false)
+    const sortRef = React.useRef()
+
+    const handleOutsideClick = (event) => {
+        const path = event.path || (event.composedPath && event.composedPath());
+        if (!path.includes(sortRef.current)) {
+            setHiddenPopup(false);
+        }
+    }
+
+    const toggleSortType = (index) => {
+        setActiveSortType(index)
+        setHiddenPopup(false)
+    }
+
+
+    React.useEffect(() => {
+        document.body.addEventListener('click', handleOutsideClick);
+    }, []);   
+
     return (
-        <div className="sort">
+        <div ref={sortRef} className="sort">
             <div className="sort__label">
                 <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -10,20 +30,20 @@ function Sort({ activeSortType, setActiveSortType, sortTypes }) {
                         fill="#2C2C2C" />
                 </svg>
                 <b>Сортировка по:</b>
-                <span>{sortTypes[activeSortType]}</span>
+                <span onClick={() => setHiddenPopup(!hiddenPopup)}>{sortTypes[activeSortType].name}</span>
             </div>
-            <div className="sort__popup">
+            {hiddenPopup && <div className="sort__popup">
                 <ul>
                     {sortTypes && sortTypes.map((sortType, index) => {
                         return <li 
-                            key={`${index}_${sortType}`}
+                            key={`${index}_${sortType.name}`}
                             className={index === activeSortType ? 'active' : ''}
-                            onClick={() => setActiveSortType(index)}
-                            >{sortType}
+                            onClick={() => toggleSortType(index)}
+                            >{sortType.name}
                         </li>
                     })}
                 </ul>
-            </div>
+            </div>}
         </div>
     )
 }
