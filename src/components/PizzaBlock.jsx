@@ -44,7 +44,15 @@ function PizzaBlock({ id, name, imageUrl, types, sizes, price, onClickAddPizza, 
                 <Button
                     outline
                     className="button--add"
-                    onClick={() => onClickAddPizza({id, name, type: activeType, size: activeSize, price, count: addedCount})}
+                    onClick={() => onClickAddPizza({
+                        id, 
+                        name, 
+                        price, 
+                        size: activeSize, 
+                        type: activeType, 
+                        typeName: pizzaTypes[activeType],
+                        image: imageUrl   
+                    })}
                 >
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path

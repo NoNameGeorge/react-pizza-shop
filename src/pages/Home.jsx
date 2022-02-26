@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Categories, PizzaBlock, Sort } from '../components';
+import { Categories, PizzaBlock } from '../components';
 
 import { fetchPizzas } from '../redux/actions/pizzas';
 import { addPizzaToCart } from '../redux/actions/cart';
@@ -17,16 +17,11 @@ function Home() {
     const dispatch = useDispatch();
     const pizzas = useSelector(({ pizzas }) => pizzas.items);
     const { cartItems } = useSelector(({ cart }) => cart);
-
-    console.log('--------', cartItems)
+    const [activeCategory, setActiveCategory] = React.useState(null)
 
     React.useEffect(() => {
-        dispatch(fetchPizzas());
+        dispatch(fetchPizzas(activeCategory));
     }, []);
-
-
-    const [activeCategory, setActiveCategory] = React.useState(null)
-    const [activeSortType, setActiveSortType] = React.useState(0)
 
     const handleAddPizzaToCart = (obj) => {
         dispatch({
@@ -35,21 +30,21 @@ function Home() {
         });
     }
 
+    const setActiveCategoryAndFetch = (index) => {
+        setActiveCategory(index)
+        dispatch(fetchPizzas(index))
+    }
+
     return (
         <div className="container">
             <div className="content__top">
                 <div className="categories">
                     <Categories
                         activeCategory={activeCategory}
-                        setActiveCategory={setActiveCategory}
+                        setActiveCategory={setActiveCategoryAndFetch}
                         categories={categories}
                     />
                 </div>
-                <Sort
-                    activeSortType={activeSortType}
-                    setActiveSortType={setActiveSortType}
-                    sortTypes={sortTypes}
-                />
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
