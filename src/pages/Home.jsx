@@ -12,7 +12,6 @@ function Home() {
     const dispatch = useDispatch();
 
     const pizzas = useSelector(({ pizzas }) => pizzas.items);
-    const { cartItems } = useSelector(({ cart }) => cart);
 
     const [activeCategory, setActiveCategory] = React.useState(null)
 
@@ -47,11 +46,10 @@ function Home() {
                         return <PizzaBlock
                             {...pizza}
                             onClickAddPizza={handleAddPizzaToCart}
-                            addedCount={cartItems[pizza.id] && cartItems[pizza.id].totalItemCount}
                             key={`${pizza.id}_${pizza.name}`}
                         />
                     })
-                    : [1,1,1,1,1].map(item => <LoadingBlock />)
+                    : [1,1,1,1,1].map((item, index) => <LoadingBlock key={`${index}__loading`} />)
                 }
             </div>
         </div>
