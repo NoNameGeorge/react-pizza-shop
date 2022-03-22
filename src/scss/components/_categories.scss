@@ -1,14 +1,21 @@
-@import './../variables';
+@import "./../variables";
 
 .categories {
+  // max-width: 100%;
+  // overflow-x: scroll;
   ul {
     display: flex;
+    flex-wrap: wrap;
+    margin-bottom: -10px;
+    margin-right: -10px;
+    // width: max-content;
 
     li {
       background-color: #f9f9f9;
       padding: 13px 30px;
       border-radius: 30px;
       margin-right: 10px;
+      margin-bottom: 10px;
       font-weight: bold;
       cursor: pointer;
       transition: background-color 0.1s ease-in-out;
@@ -25,6 +32,13 @@
       &.active {
         background-color: #282828;
         color: #fff;
+      }
+
+      @media (max-width: 1300px) {
+        padding: 11px 25px;
+      }
+      @media (max-width: 768px) {
+        padding: 9px 20px;
       }
     }
   }
