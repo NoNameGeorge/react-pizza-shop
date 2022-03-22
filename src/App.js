@@ -12,6 +12,7 @@ function App() {
         <Routes>
           <Route path='/' exact element={<Home />} />
           <Route path='/cart' exact element={<Cart />} />
+          <Route path='*' exact element={<Home />} />
         </Routes>
       </div>
     </div>
